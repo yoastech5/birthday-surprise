@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mekdes ❤️ My Forever</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:black;color:white;overflow-x:hidden;text-align:center;position:relative;}
+#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;background:black;}
+#loveTextCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
+#intro {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 20px;
+  animation: flashCard 1s infinite;
+  background: rgba(255, 77, 141, 0.1);
+  border: 3px solid #ff4d8d;
+  border-radius: 25px;
+  width: 90%;        /* longer width */
+  max-width: 600px;  /* limit max width */
+  margin: 0 auto;    /* center horizontally */
+  text-align: center;
+  font-weight: 700;  /* bold text */
+  color: #ff4d8d;
+  text-shadow: 0 0 15px #ff4d8d, 0 0 30px #ff69b4;
+}
+
+/* Flash animation */
+@keyframes flashCard {
+  0%, 100% { box-shadow: 0 0 20px #ff4d8d, 0 0 40px #ff69b4; transform: scale(1); }
+  50% { box-shadow: 0 0 50px #ffd700, 0 0 80px #ff4d8d; transform: scale(1.05); }
+}
+
+#intro h2 {
+  font-size: 32px;  /* larger heading */
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+#intro p {
+  font-size: 20px;
+  font-weight: 600;
+}
+#main{display:none;padding:20px;}
+h1{color:#ff4d8d;font-size:32px;text-shadow:0 0 25px #ff4d8d;animation:glow 2s ease-in-out infinite alternate;}
+@keyframes glow{0%{text-shadow:0 0 15px #ff4d8d,0 0 30px #ff4d8d;}100%{text-shadow:0 0 30px #ff4d8d,0 0 60px #ff4d8d;}}
+.glass{background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);padding:25px;border-radius:25px;margin-top:25px;box-shadow:0 0 20px rgba(255,77,141,0.5);transition:transform 0.3s ease,box-shadow 0.3s ease;}
+.glass:hover{transform:scale(1.03);box-shadow:0 0 30px rgba(255,77,141,0.7);}
+button{margin-top:20px;padding:12px 25px;border:none;background:#ff4d8d;color:white;border-radius:30px;cursor:pointer;font-weight:600;box-shadow:0 0 10px #ff4d8d;transition:0.3s;}
+button:hover{transform:scale(1.1);box-shadow:0 0 25px #ff4d8d;}
+#proposal{display:none;margin-top:20px;font-size:20px;color:#ff4d8d;}
+.heart{position:fixed;bottom:-20px;font-size:20px;animation:float 6s linear infinite;color:#ff4d8d;opacity:0.7;text-shadow:0 0 5px #ff4d8d;}
+@keyframes float{0%{transform:translateY(0);opacity:0.7;}100%{transform:translateY(-100vh);opacity:0;}}
+#typing{margin-top:15px; min-height:60px; font-size:18px; opacity:0.9;line-height:1.5;}
+#gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:20px;}
+#gallery img{width:100%;border-radius:15px;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s;}
+#gallery img:hover{transform:scale(1.05);box-shadow:0 0 15px #ff4d8d;}
+#modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);justify-content:center;align-items:center;z-index:999;}
+#modal img{max-width:90%;max-height:90%;border-radius:20px;box-shadow:0 0 25px #ff4d8d;}
+#modal span{position:absolute;top:20px;right:30px;font-size:40px;color:#ff4d8d;cursor:pointer;}
+#yesPhotos{display:none;margin-top:20px;position:relative;overflow:hidden;width:100%;max-width:350px;margin-left:auto;margin-right:auto;}
+#carouselTrack{display:flex;transition:transform 0.5s ease;}
+#yesPhotos img{min-width:100%;border-radius:20px;margin:0 5px;box-shadow:0 0 20px #ff4d8d;}
+#carouselButtons{margin-top:10px;display:flex;justify-content:center;gap:15px;}
+/* Sparkle animation */
+.sparkle {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff4d8d, 0 0 20px #ffd700;
+  animation: sparkleFloat 1.5s linear forwards;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+@keyframes sparkleFloat {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-80px) scale(0.5); opacity: 0; }
+}
+
+/* Glow effect when YES */
+.yesGlow {
+  animation: pulseGlow 1.5s infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from { box-shadow: 0 0 15px #ff4d8d; }
+  to { box-shadow: 0 0 40px #ffd700, 0 0 60px #ff4d8d; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<canvas id="loveTextCanvas"></canvas>
+
+<div id="intro" onclick="enterSite()">
+<h2>This is not just a website...</h2>
+<p>This is my heart ❤️</p>
+<p>Tap to enter</p>
+</div>
+
+<div id="main">
+<h1>Happy Birthday Babe 💖</h1>
+<div class="glass" id="loveDays"></div>
+<div class="glass" id="typing"></div>
+
+<div id="gallery">
+<img src="photo7.jpg" onclick="openModal(this)">
+<img src="photo2.jpg" onclick="openModal(this)">
+<img src="photo3.jpg" onclick="openModal(this)">
+<img src="photo4.jpg" onclick="openModal(this)">
+<img src="photo5.jpg" onclick="openModal(this)">
+<img src="photo6.jpg" onclick="openModal(this)">
+</div>
+
+<div id="modal" onclick="closeModal()">
+<span>&times;</span>
+<img id="modalImg">
+</div>
+
+<div class="glass">
+<button onclick="propose()">Open Your Special Surprise 💍</button>
+<div id="proposal">
+<p>My Love, will you marry me? 💍❤️</p>
+<button onclick="sayYes()">YES ❤️</button>
+<button onclick="moveNo(this)">NO 😅</button>
+</div>
+</div>
+
+<div id="yesPhotos">
+<div id="carouselTrack">
+<img src="special1.jpg">
+<img src="special2.jpg">
+<img src="special3.jpg">
+</div>
+<div id="carouselButtons">
+<button onclick="prevPhoto()">◀</button>
+<button onclick="nextPhoto()">▶</button>
+</div>
+</div>
+
+<canvas id="fireworkCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;"></canvas>
+<audio id="music" autoplay loop>
+<source src="romantic.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Stars
+const starCanvas=document.getElementById('stars');const starCtx=starCanvas.getContext('2d');starCanvas.width=window.innerWidth;starCanvas.height=window.innerHeight;const stars=[];for(let i=0;i<200;i++){stars.push({x:Math.random()*starCanvas.width,y:Math.random()*starCanvas.height,radius:Math.random()*1.2+0.2,speed:Math.random()*0.5+0.1});}function drawStars(){starCtx.clearRect(0,0,starCanvas.width,starCanvas.height);for(const s of stars){starCtx.beginPath();starCtx.arc(s.x,s.y,s.radius,0,Math.PI*2);starCtx.fillStyle='white';starCtx.fill();s.y-=s.speed;if(s.y<0)s.y=starCanvas.height;}requestAnimationFrame(drawStars);}drawStars();
+
+// Soft cinematic floating love text
+const loveCanvas = document.getElementById("loveTextCanvas");
+const loveCtx = loveCanvas.getContext("2d");
+loveCanvas.width = window.innerWidth;
+loveCanvas.height = window.innerHeight;
+
+// Colors palette
+const colors = ["#ff4d8d", "#ff69b4", "#ffb6c1", "#ffd700", "#da70d6"];
+const texts = [];
+for (let i = 0; i < 20; i++) {
+  texts.push({
+    x: Math.random() * loveCanvas.width,
+    y: Math.random() * loveCanvas.height,
+    text: "I Love You Mekdi ❤️",
+    speed: Math.random() * 0.2 + 0.1,  // slower base speed
+    color: colors[Math.floor(Math.random() * colors.length)],
+    opacity: Math.random() * 0.4 + 0.3, // start opacity 0.3~0.7
+    size: Math.random() * 8 + 16         // font size 16~24px
+  });
+}
+
+function drawLoveText() {
+  loveCtx.clearRect(0, 0, loveCanvas.width, loveCanvas.height);
+  for (const t of texts) {
+    loveCtx.fillStyle = t.color;
+    loveCtx.globalAlpha = t.opacity;
+    loveCtx.font = t.size + "px Poppins";
+    loveCtx.fillText(t.text, t.x, t.y);
+
+    // Move up
+    t.y -= t.speed;
+
+    // Gradually fade and shrink as it goes higher
+    t.opacity -= 0.0008; // slower fade
+    t.size *= 0.999;     // shrink slowly
+
+    // Reset if it disappears or goes off screen
+    if (t.y < -30 || t.opacity <= 0.05) {
+      t.y = loveCanvas.height + 20;
+      t.x = Math.random() * loveCanvas.width;
+      t.color = colors[Math.floor(Math.random() * colors.length)];
+      t.opacity = Math.random() * 0.4 + 0.3;
+      t.size = Math.random() * 8 + 16;
+    }
+  }
+  loveCtx.globalAlpha = 1;
+  requestAnimationFrame(drawLoveText);
+}
+
+drawLoveText();
+
+// Enter site
+function enterSite(){document.getElementById("intro").style.display="none";document.getElementById("main").style.display="block";startHearts();typeText();updateLoveDays();startFireworks();document.getElementById("music").play();}
+
+// Typing
+const text="From January 23, the day our story began, my life changed forever. My Love, you are my peace, my happiness, and my future. ❤️";let i=0;function typeText(){if(i<text.length){document.getElementById("typing").innerHTML+=text.charAt(i);i++;setTimeout(typeText,40);}}
+
+// Love Days
+let startDate=new Date("January 23, 2026");function updateLoveDays(){const today=new Date();const diff=today-startDate;const daysTogether=Math.floor(diff/(1000*60*60*24));document.getElementById("loveDays").innerHTML="We have loved each other for "+daysTogether+" beautiful days 💕";}
+
+// Proposal
+function propose(){document.getElementById("proposal").style.display="block";}
+function sayYes(){
+  confetti({particleCount:400,spread:180,origin:{y:0.6}});
+
+  document.getElementById("proposal").innerHTML =
+  "She said YES!!! 💍❤️ Forever starts now.";
+
+  const yesSection = document.getElementById("yesPhotos");
+  yesSection.style.display="block";
+
+  // Add glow effect
+  yesSection.classList.add("yesGlow");
+
+  // Sparkle explosion
+  for(let i=0;i<40;i++){
+    createSparkle();
+  }
+}
+
+// Sparkle creator
+function createSparkle(){
+  const sparkle=document.createElement("div");
+  sparkle.classList.add("sparkle");
+  sparkle.style.left=Math.random()*100+"vw";
+  sparkle.style.top=Math.random()*100+"vh";
+  document.body.appendChild(sparkle);
+
+  setTimeout(()=>sparkle.remove(),1500);
+}
+function moveNo(btn){btn.style.position="absolute";btn.style.left=Math.random()*80+"vw";btn.style.top=Math.random()*80+"vh";}
+
+// Hearts
+function startHearts(){setInterval(()=>{const heart=document.createElement("div");heart.classList.add("heart");heart.innerHTML="❤";heart.style.left=Math.random()*100+"vw";heart.style.fontSize=(Math.random()*20+15)+"px";document.body.appendChild(heart);setTimeout(()=>heart.remove(),6000);},800);}
+
+// Fireworks
+function startFireworks(){const canvas=document.getElementById("fireworkCanvas");const ctx=canvas.getContext("2d");canvas.width=window.innerWidth;canvas.height=window.innerHeight;setInterval(()=>{const x=Math.random()*canvas.width;const y=Math.random()*canvas.height/2;confetti({particleCount:200,spread:180,origin:{x:x/canvas.width,y:y/canvas.height}});},3000);}
+
+// Modal
+function openModal(img){document.getElementById("modal").style.display="flex";document.getElementById("modalImg").src=img.src;}
+function closeModal(){document.getElementById("modal").style.display="none";}
+
+// Carousel
+let currentIndex=0;const carousel=document.getElementById("carouselTrack");
+function showPhoto(index){carousel.style.transform=`translateX(-${index*100}%)`;}
+function nextPhoto(){currentIndex=(currentIndex+1)%carousel.children.length;showPhoto(currentIndex);}
+function prevPhoto(){currentIndex=(currentIndex-1+carousel.children.length)%carousel.children.length;showPhoto(currentIndex);}
+</script>
+
+</body>
+</html>
